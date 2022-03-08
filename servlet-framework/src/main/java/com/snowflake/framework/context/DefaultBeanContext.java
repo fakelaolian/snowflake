@@ -2,7 +2,7 @@ package com.snowflake.framework.context;
 
 import com.snowflake.framework.annotation.Component;
 import com.snowflake.framework.annotation.Install;
-import com.snowflake.framework.exception.SnowflakeIllegalInstallClass;
+import com.snowflake.framework.exception.IllegalInstallClassException;
 import com.snowflake.framework.utils.ClassUtils;
 import lombok.extern.slf4j.Slf4j;
 
@@ -65,7 +65,7 @@ public class DefaultBeanContext implements BeanContext {
         try {
             // 判断类是否注解了@Component, 没注解Component的类不允许注入。
             if (!_class.isAnnotationPresent(Component.class)) {
-                throw new SnowflakeIllegalInstallClass("被注入的类需要注解Component，否则不允许注入。");
+                throw new IllegalInstallClassException("被注入的类需要注解Component，否则不允许注入。");
             }
 
             Object beanObject = ClassUtils.newInstance(_class);
