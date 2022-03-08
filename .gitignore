@@ -1,0 +1,12 @@
+*/@logback.path@/
+
+.idea
+
+*.iml
+*.log
+*.class
+
+.DS_Store
+target
+logs
+wallet-hd
