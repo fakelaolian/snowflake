@@ -1,0 +1,3 @@
+[server]
+name = "snowflake"
+port = 8080

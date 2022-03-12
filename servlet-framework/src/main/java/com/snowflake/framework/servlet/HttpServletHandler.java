@@ -1,5 +1,6 @@
 package com.snowflake.framework.servlet;
 
+import com.snowflake.framework.annotation.Component;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

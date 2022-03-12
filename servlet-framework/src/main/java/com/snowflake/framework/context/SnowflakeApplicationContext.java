@@ -1,7 +1,8 @@
 package com.snowflake.framework.context;
 
 import com.snowflake.framework.annotation.Install;
-import com.snowflake.framework.server.JettyServer;
+import com.snowflake.framework.servlet.CoreServletHandler;
+import com.snowflake.framework.servlet.JettyServlet;
 
 /**
  * 全局上下文
@@ -11,8 +12,21 @@ import com.snowflake.framework.server.JettyServer;
  */
 public class SnowflakeApplicationContext {
 
-    private BeanContext beanContext;
-    private JettyServer jettyServer;
+    @Install
     private ServletRequestAttribute servletRequestAttribute;
+
+    // bean容器上下文
+    private final BeanContext beanContext;
+
+    public SnowflakeApplicationContext() {
+        beanContext = new DefaultBeanContext();
+        beanContext.addBean(this);
+        beanContext.addBean(new CoreServletHandler());
+        beanContext.addBean(new JettyServlet());
+    }
+
+    public void addBean(Object object) {
+        beanContext.addBean(object);
+    }
 
 }

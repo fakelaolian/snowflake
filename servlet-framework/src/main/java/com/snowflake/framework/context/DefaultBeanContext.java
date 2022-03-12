@@ -1,9 +1,10 @@
 package com.snowflake.framework.context;
 
+import com.snowflake.commons.StringUtils;
 import com.snowflake.framework.annotation.Component;
 import com.snowflake.framework.annotation.Install;
 import com.snowflake.framework.exception.IllegalInstallClassException;
-import com.snowflake.framework.utils.ClassUtils;
+import com.snowflake.commons.ClassUtils;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
@@ -24,7 +25,14 @@ public class DefaultBeanContext implements BeanContext {
 
     @Override
     public void addBean(Object object) {
-        _beans.put(object.getClass(), object);
+        Class<?> _class = object.getClass();
+        _beans.put(_class, object);
+
+        // 如果有有接口，那么接口也作为一个KEY使用
+        if (_class.getInterfaces().length > 0 )
+            _beans.put(_class.getInterfaces()[0], object);
+
+        log.info("put {} in bean context.", object);
         _process(object);
     }
 
@@ -65,7 +73,8 @@ public class DefaultBeanContext implements BeanContext {
         try {
             // 判断类是否注解了@Component, 没注解Component的类不允许注入。
             if (!_class.isAnnotationPresent(Component.class)) {
-                throw new IllegalInstallClassException("被注入的类需要注解Component，否则不允许注入。");
+                throw new IllegalInstallClassException(StringUtils.format("被注入的类需要注解Component，否则不允许注入。类路径：{}, Bean路径：{}",
+                        object.getClass().getName(), _class.getName()));
             }
 
             Object beanObject = ClassUtils.newInstance(_class);

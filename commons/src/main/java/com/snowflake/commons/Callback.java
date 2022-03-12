@@ -1,4 +1,4 @@
-package com.snowflake.framework.utils;
+package com.snowflake.commons;
 
 /* ************************************************************************
  *
