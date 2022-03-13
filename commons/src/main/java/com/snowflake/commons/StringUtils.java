@@ -34,8 +34,7 @@ import java.util.regex.Pattern;
  *
  * @author lts
  */
-public
-class StringUtils {
+public final class StringUtils {
 
   // unicode下的空格 \u0000
   public static final String UNICODE_U0000 = "\u0000";

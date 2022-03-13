@@ -27,12 +27,4 @@ public final class JSONSerials {
         return JSONObject.parseObject(jstring).toJavaObject(_class);
     }
 
-    /**
-     * 深拷贝对象
-     */
-    @SuppressWarnings("unchecked")
-    public static <T> T deepCopy(T object) {
-        return (T) asObject(asString(object), object.getClass());
-    }
-
 }
